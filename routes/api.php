@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
+Route::get('/', 'App\Http\Controllers\Api\RootController@index')->name('api.root');
 Route::apiResource('films', 'App\Http\Controllers\Api\FilmController');
 Route::apiResource('people', 'App\Http\Controllers\Api\PersonController');
 Route::apiResource('planets', 'App\Http\Controllers\Api\PlanetController');

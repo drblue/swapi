@@ -29,5 +29,6 @@ body {
 img {
 	align-self: center;
 	height: auto;
-	width: 90vw;
+	min-width: 50vw;
+	max-width: 90vw;
 }

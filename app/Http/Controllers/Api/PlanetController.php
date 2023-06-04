@@ -49,7 +49,11 @@ class PlanetController extends Controller
 	 */
 	public function show(Planet $planet)
 	{
-		//
+		// Load relationships
+		$planet->load('residents', 'films:id,title');	// For some reason this doesn't work: 'residents:id,name'
+
+		// Return response as json
+		return $planet;
 	}
 
 	/**

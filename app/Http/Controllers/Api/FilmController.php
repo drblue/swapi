@@ -49,7 +49,11 @@ class FilmController extends Controller
 	 */
 	public function show(Film $film)
 	{
-		//
+		// Load relationships
+		$film->load('characters:id,name', 'planets:id,name', 'starships:id,name', 'vehicles:id,name', 'species:id,name');
+
+		// Return response as json
+		return $film;
 	}
 
 	/**

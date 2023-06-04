@@ -49,7 +49,11 @@ class StarshipController extends Controller
 	 */
 	public function show(Starship $starship)
 	{
-		//
+		// Load relationships
+		$starship->load('pilots:id,name', 'films:id,title');
+
+		// Return response as json
+		return $starship;
 	}
 
 	/**

@@ -49,7 +49,11 @@ class SpeciesController extends Controller
 	 */
 	public function show(Species $species)
 	{
-		//
+		// Load relationships
+		$species->load('people:id,name', 'homeworld:id,name', 'films:id,title');
+
+		// Return response as json
+		return $species;
 	}
 
 	/**

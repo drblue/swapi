@@ -49,7 +49,10 @@ class PersonController extends Controller
 	 */
 	public function show(Person $person)
 	{
-		//
+		$person->load('homeworld:id,name', 'films:id,title', 'species:id,name', 'starships:id,name', 'vehicles:id,name');
+
+		// Return response as json
+		return $person;
 	}
 
 	/**

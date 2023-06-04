@@ -49,7 +49,11 @@ class VehicleController extends Controller
 	 */
 	public function show(Vehicle $vehicle)
 	{
-		//
+		// Load relationships
+		$vehicle->load('pilots:id,name', 'films:id,title');
+
+		// Return response as json
+		return $vehicle;
 	}
 
 	/**

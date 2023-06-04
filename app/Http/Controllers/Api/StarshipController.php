@@ -11,7 +11,7 @@ class StarshipController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function index()
 	{
@@ -26,15 +26,18 @@ class StarshipController extends Controller
 			$query->where('name', 'like', '%' . request('search') . '%');
 		}
 
-		// Return paginated response as json with 10 items per page
-		return $query->paginate(10)->appends(request()->query());
+		// Get paginated results
+		$starships = $query->paginate(10)->appends(request()->query());
+
+		// Return JSON response
+		return response()->json($starships);
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store(Request $request)
 	{
@@ -45,7 +48,7 @@ class StarshipController extends Controller
 	 * Display the specified resource.
 	 *
 	 * @param  \App\Models\Starship  $starship
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function show(Starship $starship)
 	{
@@ -53,7 +56,7 @@ class StarshipController extends Controller
 		$starship->load('pilots:id,name', 'films:id,title');
 
 		// Return response as json
-		return $starship;
+		return response()->json($starship);
 	}
 
 	/**
@@ -61,7 +64,7 @@ class StarshipController extends Controller
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \App\Models\Starship  $starship
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function update(Request $request, Starship $starship)
 	{
@@ -72,7 +75,7 @@ class StarshipController extends Controller
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  \App\Models\Starship  $starship
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function destroy(Starship $starship)
 	{

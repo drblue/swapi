@@ -11,7 +11,7 @@ class FilmController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function index()
 	{
@@ -26,15 +26,18 @@ class FilmController extends Controller
 			$query->where('title', 'like', '%' . request('search') . '%');
 		}
 
-		// Return paginated response as json with 10 items per page
-		return $query->paginate(10)->appends(request()->query());
+		// Get paginated results
+		$films = $query->paginate(10)->appends(request()->query());
+
+		// Return JSON response
+		return response()->json($films);
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store(Request $request)
 	{
@@ -45,7 +48,7 @@ class FilmController extends Controller
 	 * Display the specified resource.
 	 *
 	 * @param  \App\Models\Film  $film
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function show(Film $film)
 	{
@@ -53,7 +56,7 @@ class FilmController extends Controller
 		$film->load('characters:id,name', 'planets:id,name', 'starships:id,name', 'vehicles:id,name', 'species:id,name');
 
 		// Return response as json
-		return $film;
+		return response()->json($film);
 	}
 
 	/**
@@ -61,7 +64,7 @@ class FilmController extends Controller
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \App\Models\Film  $film
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function update(Request $request, Film $film)
 	{
@@ -72,7 +75,7 @@ class FilmController extends Controller
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  \App\Models\Film  $film
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function destroy(Film $film)
 	{

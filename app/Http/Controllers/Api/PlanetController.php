@@ -11,7 +11,7 @@ class PlanetController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function index()
 	{
@@ -26,15 +26,18 @@ class PlanetController extends Controller
 			$query->where('name', 'like', '%' . request('search') . '%');
 		}
 
-		// Return paginated response as json with 10 items per page
-		return $query->paginate(10)->appends(request()->query());
+		// Get paginated results
+		$planets = $query->paginate(10)->appends(request()->query());
+
+		// Return JSON response
+		return response()->json($planets);
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store(Request $request)
 	{
@@ -45,7 +48,7 @@ class PlanetController extends Controller
 	 * Display the specified resource.
 	 *
 	 * @param  \App\Models\Planet  $planet
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function show(Planet $planet)
 	{
@@ -53,7 +56,7 @@ class PlanetController extends Controller
 		$planet->load('residents', 'films:id,title');	// For some reason this doesn't work: 'residents:id,name'
 
 		// Return response as json
-		return $planet;
+		return response()->json($planet);
 	}
 
 	/**
@@ -61,7 +64,7 @@ class PlanetController extends Controller
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \App\Models\Planet  $planet
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function update(Request $request, Planet $planet)
 	{
@@ -72,7 +75,7 @@ class PlanetController extends Controller
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  \App\Models\Planet  $planet
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function destroy(Planet $planet)
 	{

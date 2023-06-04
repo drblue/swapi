@@ -11,7 +11,7 @@ class PersonController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function index()
 	{
@@ -29,15 +29,18 @@ class PersonController extends Controller
 			$query->where('name', 'like', '%' . request('search') . '%');
 		}
 
-		// Return paginated response as json with 10 items per page
-		return $query->paginate(10)->appends(request()->query());
+		// Get paginated results
+		$people = $query->paginate(10)->appends(request()->query());
+
+		// Return JSON response
+		return response()->json($people);
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store(Request $request)
 	{
@@ -48,14 +51,14 @@ class PersonController extends Controller
 	 * Display the specified resource.
 	 *
 	 * @param  \App\Models\Person  $person
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function show(Person $person)
 	{
 		$person->load('homeworld:id,name', 'films:id,title', 'species:id,name', 'starships:id,name', 'vehicles:id,name');
 
 		// Return response as json
-		return $person;
+		return response()->json($person);
 	}
 
 	/**
@@ -63,7 +66,7 @@ class PersonController extends Controller
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  \App\Models\Person  $person
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function update(Request $request, Person $person)
 	{
@@ -74,7 +77,7 @@ class PersonController extends Controller
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  \App\Models\Person  $person
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function destroy(Person $person)
 	{

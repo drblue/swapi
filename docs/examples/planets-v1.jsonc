@@ -1,0 +1,33 @@
+{
+	"current_page": 1,
+	"data": [
+		{
+			"id": 1,
+			"name": "Tatooine",
+			"rotation_period": "23",
+			"orbital_period": "304",
+			"diameter": "10465",
+			"climate": "arid",
+			"gravity": "1 standard",
+			"terrain": "desert",
+			"surface_water": "1",
+			"population": "200000",
+			"created": "2014-12-09T13:50:49.641000Z",
+			"edited": "2014-12-20T20:58:18.411000Z",
+			"residents": [],	// <-- Replaced with `residents_count` (and actually working now)
+			"films": [			// <-- Replaced with `films_count`
+				{
+					"id": 1,
+					"title": "A New Hope"
+				},
+				{
+					"id": 3,
+					"title": "Return of the Jedi"
+				}
+				// ...
+			]
+		}
+		// ...
+	]
+	// ...
+}

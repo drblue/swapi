@@ -1,0 +1,47 @@
+{
+	"current_page": 1,
+	"data": [
+		{
+			"id": 1,
+			"name": "Human",
+			"classification": "mammal",
+			"designation": "sentient",
+			"average_height": "180",
+			"average_lifespan": "120",
+			"eye_colors": "brown, blue, green, hazel, grey, amber",
+			"hair_colors": "blonde, brown, black, red",
+			"skin_colors": "caucasian, black, asian, hispanic",
+			"language": "Galactic Basic",
+			"created": "2014-12-10T13:52:11.567000Z",
+			"edited": "2014-12-20T21:36:42.136000Z",
+			"people": [		// Removed and replaced with `people_count`
+				{
+					"id": 66,
+					"name": "Dormé"
+				},
+				{
+					"id": 67,
+					"name": "Dooku"
+				}
+				// ...
+			],
+			"homeworld": {
+				"id": 9,
+				"name": "Coruscant"
+			},
+			"films": [		// Removed and replaced with `films_count`
+				{
+					"id": 1,
+					"title": "A New Hope"
+				},
+				{
+					"id": 2,
+					"title": "The Empire Strikes Back"
+				}
+				// ...
+			]
+		}
+		// ...
+	]
+	// ...
+}

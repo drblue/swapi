@@ -1,0 +1,55 @@
+{
+	"current_page": 1,
+	"data": [
+		{
+			"id": 1,
+			"name": "Luke Skywalker",
+			"birth_year": "19BBY",
+			"eye_color": "blue",
+			"hair_color": "blond",
+			"height": "172",
+			"mass": "77",
+			"skin_color": "fair",
+			"created": "2014-12-09T13:50:51.644000Z",
+			"edited": "2014-12-20T21:17:56.891000Z",
+			"homeworld": {
+				"id": 1,
+				"name": "Tatooine"
+			},
+			"films": [			// <-- Replaced with `films_count`
+				{
+					"id": 1,
+					"title": "A New Hope"
+				},
+				{
+					"id": 2,
+					"title": "The Empire Strikes Back"
+				}
+				// ...
+			],
+			"species": [],		// <-- Replaced with `species_count`
+			"starships": [		// <-- Replaced with `starships_count`
+				{
+					"id": 12,
+					"name": "X-wing"
+				},
+				{
+					"id": 22,
+					"name": "Imperial shuttle"
+				}
+			],
+			"vehicles": [		// <-- Replaced with `vehicles_count`
+				{
+					"id": 14,
+					"name": "Snowspeeder"
+				},
+				{
+					"id": 30,
+					"name": "Imperial Speeder Bike"
+				}
+			]
+		}
+		// ...
+	]
+	// ...
+}

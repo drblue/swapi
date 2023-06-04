@@ -27,7 +27,11 @@ class FilmController extends Controller
 		}
 
 		// Get paginated results
-		$films = $query->paginate(10)->appends(request()->query());
+		$films = $query->paginate(
+			request()->has('per_page') ? intval(request('per_page')) : 10
+		)->appends(
+			request()->query()
+		);
 
 		// Return JSON response
 		return response()->json($films);

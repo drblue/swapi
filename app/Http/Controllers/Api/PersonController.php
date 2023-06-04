@@ -30,7 +30,11 @@ class PersonController extends Controller
 		}
 
 		// Get paginated results
-		$people = $query->paginate(10)->appends(request()->query());
+		$people = $query->paginate(
+			request()->has('per_page') ? intval(request('per_page')) : 10
+		)->appends(
+			request()->query()
+		);
 
 		// Return JSON response
 		return response()->json($people);

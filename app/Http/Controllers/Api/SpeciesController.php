@@ -27,7 +27,11 @@ class SpeciesController extends Controller
 		}
 
 		// Get paginated results
-		$species = $query->paginate(10)->appends(request()->query());
+		$species = $query->paginate(
+			request()->has('per_page') ? intval(request('per_page')) : 10
+		)->appends(
+			request()->query()
+		);
 
 		// Return JSON response
 		return response()->json($species);

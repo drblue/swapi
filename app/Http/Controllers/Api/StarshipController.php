@@ -27,7 +27,11 @@ class StarshipController extends Controller
 		}
 
 		// Get paginated results
-		$starships = $query->paginate(10)->appends(request()->query());
+		$starships = $query->paginate(
+			request()->has('per_page') ? intval(request('per_page')) : 10
+		)->appends(
+			request()->query()
+		);
 
 		// Return JSON response
 		return response()->json($starships);

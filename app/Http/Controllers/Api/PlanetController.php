@@ -27,7 +27,11 @@ class PlanetController extends Controller
 		}
 
 		// Get paginated results
-		$planets = $query->paginate(10)->appends(request()->query());
+		$planets = $query->paginate(
+			request()->has('per_page') ? intval(request('per_page')) : 10
+		)->appends(
+			request()->query()
+		);
 
 		// Return JSON response
 		return response()->json($planets);

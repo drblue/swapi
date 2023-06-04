@@ -4,18 +4,7 @@
 		{
 			"id": 1,
 			"name": "Luke Skywalker",
-			"birth_year": "19BBY",
-			"eye_color": "blue",
-			"hair_color": "blond",
-			"height": "172",
-			"mass": "77",
-			"skin_color": "fair",
-			"created": "2014-12-09T13:50:51.644000Z",
-			"edited": "2014-12-20T21:17:56.891000Z",
-			"homeworld": {
-				"id": 1,
-				"name": "Tatooine"
-			},
+			// ...
 			"films": [			// <-- Replaced with `films_count`
 				{
 					"id": 1,

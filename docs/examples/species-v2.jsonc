@@ -4,19 +4,11 @@
 		{
 			"id": 1,
 			"name": "Human",
-			"classification": "mammal",
-			"designation": "sentient",
-			"average_height": "180",
-			"average_lifespan": "120",
-			"eye_colors": "brown, blue, green, hazel, grey, amber",
-			"hair_colors": "blonde, brown, black, red",
-			"skin_colors": "caucasian, black, asian, hispanic",
-			"language": "Galactic Basic",
-			"created": "2014-12-10T13:52:11.567000Z",
-			"edited": "2014-12-20T21:36:42.136000Z",
+			// ...
 			"people_count": 4,		// <-- Added
 			"films_count": 6		// <-- Added
 		}
+		// ...
 	]
 	// ...
 }

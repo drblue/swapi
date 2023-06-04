@@ -38,7 +38,7 @@ class VehicleController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -65,7 +65,7 @@ class VehicleController extends Controller
 	 */
 	public function update(Request $request, Vehicle $vehicle)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -76,6 +76,6 @@ class VehicleController extends Controller
 	 */
 	public function destroy(Vehicle $vehicle)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 }

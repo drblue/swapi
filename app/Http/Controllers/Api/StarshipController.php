@@ -38,7 +38,7 @@ class StarshipController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -65,7 +65,7 @@ class StarshipController extends Controller
 	 */
 	public function update(Request $request, Starship $starship)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -76,6 +76,6 @@ class StarshipController extends Controller
 	 */
 	public function destroy(Starship $starship)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 }

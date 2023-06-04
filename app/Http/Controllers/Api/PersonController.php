@@ -41,7 +41,7 @@ class PersonController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -67,7 +67,7 @@ class PersonController extends Controller
 	 */
 	public function update(Request $request, Person $person)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 
 	/**
@@ -78,6 +78,6 @@ class PersonController extends Controller
 	 */
 	public function destroy(Person $person)
 	{
-		//
+		abort(405, 'Method Not Allowed');
 	}
 }

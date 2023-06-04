@@ -18,8 +18,11 @@ class PersonController extends Controller
 		// Initialize the query builder
 		$query = Person::query();
 
+		// Count relationships
+		$query->withCount('films', 'species', 'starships', 'vehicles');
+
 		// Load relationships
-		$query->with('homeworld:id,name', 'films:id,title', 'species:id,name', 'starships:id,name', 'vehicles:id,name');
+		$query->with('homeworld:id,name');
 
 		// Search for people by name based on request query parameters
 		if (request()->has('search')) {

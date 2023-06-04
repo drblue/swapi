@@ -18,8 +18,8 @@ class FilmController extends Controller
 		// Initialize the query builder
 		$query = Film::query();
 
-		// Load relationships
-		$query->with('characters:id,name', 'planets:id,name', 'starships:id,name', 'vehicles:id,name', 'species:id,name');
+		// Count relationships
+		$query->withCount('characters', 'planets', 'starships', 'vehicles', 'species');
 
 		// Search for films by title based on request query parameters
 		if (request()->has('search')) {

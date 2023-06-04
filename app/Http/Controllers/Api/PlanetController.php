@@ -18,8 +18,8 @@ class PlanetController extends Controller
 		// Initialize the query builder
 		$query = Planet::query();
 
-		// Load relationships
-		$query->with('residents:id,name', 'films:id,title');
+		// Count relationships
+		$query->withCount('residents', 'films');
 
 		// Search for people by name based on request query parameters
 		if (request()->has('search')) {

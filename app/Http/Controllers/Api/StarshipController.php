@@ -18,8 +18,8 @@ class StarshipController extends Controller
 		// Initialize the query builder
 		$query = Starship::query();
 
-		// Load relationships
-		$query->with('pilots:id,name', 'films:id,title');
+		// Count relationships
+		$query->withCount('pilots', 'films');
 
 		// Search for people by name based on request query parameters
 		if (request()->has('search')) {

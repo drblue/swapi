@@ -18,8 +18,8 @@ class SpeciesController extends Controller
 		// Initialize the query builder
 		$query = Species::query();
 
-		// Load relationships
-		$query->with('people:id,name', 'homeworld:id,name', 'films:id,title');
+		// Count relationships
+		$query->withCount('people', 'films');
 
 		// Search for people by name based on request query parameters
 		if (request()->has('search')) {

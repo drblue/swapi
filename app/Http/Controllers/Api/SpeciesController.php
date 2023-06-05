@@ -21,6 +21,9 @@ class SpeciesController extends Controller
 		// Count relationships
 		$query->withCount('people', 'films');
 
+		// Load relationships
+		$query->with('homeworld:id,name');
+
 		// Search for people by name based on request query parameters
 		if (request()->has('search')) {
 			$query->where('name', 'like', '%' . request('search') . '%');

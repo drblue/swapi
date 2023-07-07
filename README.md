@@ -2,6 +2,8 @@
 
 Laravel-clone of swapi.dev, but with improved relationships.
 
+A deployment of this API is available at [https://swapi.thehiveresistance.com](https://swapi.thehiveresistance.com).
+
 ## Installation
 
 1. Clone the repo and `cd` into it

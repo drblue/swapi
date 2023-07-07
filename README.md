@@ -1,64 +1,224 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# StarWars API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel-clone of swapi.dev, but with improved relationships.
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Clone the repo and `cd` into it
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. Install composer dependencies
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    ```bash
+    composer install
+    ```
 
-## Learning Laravel
+3. Install npm dependencies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ```bash
+    npm install
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Create a copy of your .env file
 
-## Laravel Sponsors
+    ```bash
+    cp .env.example .env
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+5. Generate an app encryption key
 
-### Premium Partners
+    ```bash
+    php artisan key:generate
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+6. Create an empty database for our application
 
-## Contributing
+7. In the .env file, add database information to allow Laravel to connect to the database
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+8. Import the database dump from `database/dump.sql`
 
-## Code of Conduct
+9. Validate the database connection by running
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    php artisan migrate
+    ```
 
-## Security Vulnerabilities
+10. Start the local development server
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    php artisan serve
+    ```
 
-## License
+11. Visit [http://localhost:8000/api/](http://localhost:8000/api/) in your browser
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Usage
+
+Endpoints are available at `/api/` and are documented below.
+
+All index resources return only relationship counts. To get the full relationship (`id` and `name`/`title`), you must use the `GET /api/{resource}/{id}` endpoint.
+
+### Endpoints
+
+By default, the API will return 10 results per page. You can specify a custom page size using the `per_page` query parameter. You can also specify which page to return using the `page` query parameter.
+
+All endpoints support searching by name/title. You can search by using the `search` query parameter.
+
+#### Query Parameters
+
+All query parameters are optional.
+
+- `search` - search for a specific resource
+- `page` - the page number to return
+- `per_page` - the number of results to return per page (default `10`)
+
+#### People
+
+- `GET /api/characters` - returns all people
+- `GET /api/characters/{id}` - returns a person by id
+
+#### Films
+
+- `GET /api/films` - returns all films
+- `GET /api/films/{id}` - returns a film by id
+
+#### Starships
+
+- `GET /api/starships` - returns all starships
+- `GET /api/starships/{id}` - returns a starship by id
+
+#### Vehicles
+
+- `GET /api/vehicles` - returns all vehicles
+- `GET /api/vehicles/{id}` - returns a vehicle by id
+
+#### Species
+
+- `GET /api/species` - returns all species
+- `GET /api/species/{id}` - returns a species by id
+
+#### Planets
+
+- `GET /api/planets` - returns all planets
+- `GET /api/planets/{id}` - returns a planet by id
+
+## Examples
+
+See the [examples/v2](examples/v2) directory for more example responses.
+
+### `GET /api/characters`
+
+```jsonc
+{
+    "current_page": 1,
+    "data": [
+        {
+            "birth_year": "19BBY",
+            "created": "2014-12-09T13:50:51.644000Z",
+            "edited": "2014-12-20T21:17:56.891000Z",
+            "eye_color": "blue",
+            "films_count": 4,
+            "hair_color": "blond",
+            "height": "172",
+            "homeworld": {
+                "id": 1,
+                "name": "Tatooine"
+            },
+            "id": 1,
+            "mass": "77",
+            "name": "Luke Skywalker",
+            "skin_color": "fair",
+            "species_count": 0,
+            "starships_count": 2,
+            "vehicles_count": 2
+        }
+        // ...
+    ],
+    "first_page_url": "http://localhost:8000/api/people?page=1",
+    "from": 1,
+    "last_page": 9,
+    "last_page_url": "http://localhost:8000/api/people?page=9",
+    "links": [
+        {
+            "active": false,
+            "label": "&laquo; Previous",
+            "url": null
+        },
+        {
+            "active": true,
+            "label": "1",
+            "url": "http://localhost:8000/api/people?page=1"
+        },
+        // ...
+        {
+            "active": false,
+            "label": "Next &raquo;",
+            "url": "http://localhost:8000/api/people?page=2"
+        }
+    ],
+    "next_page_url": "http://localhost:8000/api/people?page=2",
+    "path": "http://localhost:8000/api/people",
+    "per_page": 10,
+    "prev_page_url": null,
+    "to": 10,
+    "total": 82
+}
+```
+
+### `GET /api/characters/1`
+
+```jsonc
+{
+    "birth_year": "19BBY",
+    "created": "2014-12-09T13:50:51.644000Z",
+    "edited": "2014-12-20T21:17:56.891000Z",
+    "eye_color": "blue",
+    "films": [
+        {
+            "id": 1,
+            "title": "A New Hope"
+        },
+        {
+            "id": 2,
+            "title": "The Empire Strikes Back"
+        },
+        {
+            "id": 3,
+            "title": "Return of the Jedi"
+        },
+        {
+            "id": 6,
+            "title": "Revenge of the Sith"
+        }
+    ],
+    "hair_color": "blond",
+    "height": "172",
+    "homeworld": {
+        "id": 1,
+        "name": "Tatooine"
+    },
+    "id": 1,
+    "mass": "77",
+    "name": "Luke Skywalker",
+    "skin_color": "fair",
+    "species": [],
+    "starships": [
+        {
+            "id": 12,
+            "name": "X-wing"
+        },
+        {
+            "id": 22,
+            "name": "Imperial shuttle"
+        }
+    ],
+    "vehicles": [
+        {
+            "id": 14,
+            "name": "Snowspeeder"
+        },
+        {
+            "id": 30,
+            "name": "Imperial Speeder Bike"
+        }
+    ]
+}
+```

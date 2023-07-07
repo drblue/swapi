@@ -11,8 +11,15 @@
 
 <body>
 	<div class="lolz">
-		<img src="{{ asset('images/light-saber-starwars.gif') }}" alt="I wouldn't do that if I were you">
-		<p class="heart" title="FED22M 🤘🏻🎸">❤️</p>
+		<img src="{{ asset('images/light-saber-starwars.gif') }}" class="gif" alt="I wouldn't do that if I were you">
+		<div class="caption">
+			<span class="heart" title="FED22M 🤘🏻🎸">❤️</span>
+		</div>
+	</div>
+	<div id="github-wrapper">
+		<a href="https://github.com/drblue/swapi" target="_blank" class="github-link" title="drblue/swapi" rel="noopener noreferrer">
+			<img src="{{ asset('images/github-mark-white.svg') }}" width="16" height="16" alt="GitHub">
+		</a>
 	</div>
 </body>
 </html>

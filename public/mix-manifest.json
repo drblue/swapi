@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/images/github-mark-white.svg": "/images/github-mark-white.svg",
+    "/images/github-mark.svg": "/images/github-mark.svg",
     "/images/light-saber-starwars.gif": "/images/light-saber-starwars.gif"
 }

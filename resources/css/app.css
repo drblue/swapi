@@ -18,18 +18,33 @@ body {
 	align-items: center;
 }
 
-.lolz {
-	text-align: center;
-}
-
-.lolz .heart {
-	cursor: pointer;
-	margin-top: 1rem;
-}
-
-img {
+img.gif {
 	align-self: center;
 	height: auto;
 	min-width: 50vw;
 	max-width: 90vw;
+}
+
+.caption {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.caption .heart {
+	cursor: pointer;
+}
+
+#github-wrapper {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 0.75rem 1rem;
+}
+
+#github-wrapper a {
+	display: flex;
+}
+
+#github-wrapper a img {
+	opacity: 0.5;
 }

@@ -13,7 +13,7 @@
 	<div class="lolz">
 		<img src="{{ asset('images/light-saber-starwars.gif') }}" class="gif" alt="I wouldn't do that if I were you">
 		<div class="caption">
-			<span class="heart" title="FED22M 🤘🏻🎸">❤️</span>
+			<a href="https://www.thehiveresistance.com" target="_blank" class="link" rel="noopener noreferrer"><span class="heart" title="🤘🏻🎸">❤️</span></a>
 		</div>
 	</div>
 	<div id="github-wrapper">

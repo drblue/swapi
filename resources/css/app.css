@@ -18,6 +18,11 @@ body {
 	align-items: center;
 }
 
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
 img.gif {
 	align-self: center;
 	height: auto;

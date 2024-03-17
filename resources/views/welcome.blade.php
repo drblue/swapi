@@ -6,6 +6,12 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>SWAPI</title>
 
+	<!-- Attribution:
+		- Star wars icons created by Freepik - Flaticon
+		- https://www.flaticon.com/free-icons/star-wars
+	-->
+	<link rel="icon" type="image/png" href="{{ asset('images/light-saber.png') }}">
+
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 

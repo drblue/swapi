@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Person extends Model
 {
 	/**
+	 * The attributes that should be cast.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+		'affiliations' => 'array',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 */
 	protected $fillable = [
@@ -18,6 +27,9 @@ class Person extends Model
 		'height',
 		'mass',
 		'skin_color',
+		'wiki_link',
+		'image_url',
+		'affiliations',
 		'created',
 		'edited',
 		'homeworld_id',

@@ -17,6 +17,7 @@ class Film extends Model
 		'director',
 		'producer',
 		'release_date',
+		'image_url',
 		'created',
 		'edited',
 	];

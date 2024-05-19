@@ -17,7 +17,7 @@ class AlterPeopleAddLinkImageAffiliations extends Migration
 			$table->string('wiki_link')->nullable()->after('skin_color');
 			$table->string('image_url')->nullable()->after('wiki_link');
 			// affiliations is an array of strings with default to empty
-			$table->json('affiliations')->default('[]')->after('image_url');
+			$table->longtext('affiliations')->default("[]")->after('image_url');
 		});
 	}
 

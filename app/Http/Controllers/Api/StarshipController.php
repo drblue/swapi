@@ -58,6 +58,7 @@ class StarshipController extends Controller
 	{
 		// Load relationships
 		$starship->load('pilots:id,name', 'films:id,title');
+		$starship->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($starship);

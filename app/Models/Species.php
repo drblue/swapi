@@ -23,6 +23,9 @@ class Species extends Model
 		'created',
 		'edited',
 		'homeworld_id',
+		'image_url',
+		'short_description',
+		'long_description',
 	];
 
 	/**
@@ -30,6 +33,7 @@ class Species extends Model
 	 */
 	protected $hidden = [
 		'homeworld_id',
+		'long_description',
 		'pivot',
 	];
 

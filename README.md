@@ -36,7 +36,7 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
 
 7. In the .env file, add database information to allow Laravel to connect to the database
 
-8. Import the database dump from `database/dump.sql`
+8. Import the canonical database dump from `data/swapi_-_2026-04-26_-_17-17-55_-_beeblebrox (jn).sql` or an equivalent current dump
 
 9. Validate the database connection by running
 
@@ -44,19 +44,54 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
     php artisan migrate
     ```
 
-10. Start the local development server
+10. Import extended metadata and selected resource images
+
+    ```bash
+    php artisan swapi:import-extensions --optimize
+    ```
+
+    The importer reads the bundled extension data in `data/`, normalizes it against the canonical API records, preserves existing dump-provided `image_url` values, copies fallback bundled images into `public/images/{resource}/` only where a resource has no image, and optionally runs ImageOptim on the final asset tree. ImageAlpha and JPEGmini can be enabled with `--imagealpha` and `--jpegmini` if those apps are installed locally.
+
+    To preview the import without writing database or image files, run:
+
+    ```bash
+    php artisan swapi:import-extensions --dry-run
+    ```
+
+11. Start the local development server
 
     ```bash
     php artisan serve
     ```
 
-11. Visit [http://localhost:8000/api/](http://localhost:8000/api/) in your browser
+12. Visit [http://localhost:8000/api/](http://localhost:8000/api/) in your browser
 
 ## Usage
 
 Endpoints are available at `/api/` and are documented below.
 
 All index resources return only relationship counts. To get the full relationship (`id` and `name`/`title`), you must use the `GET /api/{resource}/{id}` endpoint.
+
+Index resources include lightweight extended metadata such as `image_url` and `short_description` when available. Detail endpoints additionally include `long_description`.
+
+### Extended Metadata
+
+The API includes curated metadata to build richer interfaces without having to maintain custom extension files.
+
+Common extended fields:
+
+- `image_url` - public URL for the selected resource image
+- `short_description` - short summary suitable for cards and list views
+- `long_description` - longer text available on detail endpoints
+
+People may also include:
+
+- `force_alignment` - light/dark/neutral alignment when known
+- `lightsaber_color` - lightsaber color when known
+- `wiki_link` - external wiki link when populated
+- `affiliations` - affiliation list when populated
+
+The importer preserves image URLs from the canonical dump. When the dump has no image for a resource, it chooses the highest-resolution fallback image from the bundled source datasets. A small explicit override map is supported inside `App\Console\Commands\ImportExtendedMetadata` for obvious outliers.
 
 ### Endpoints
 

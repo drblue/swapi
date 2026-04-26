@@ -60,6 +60,7 @@ class PersonController extends Controller
 	public function show(Person $person)
 	{
 		$person->load('homeworld:id,name', 'films:id,title', 'species:id,name', 'starships:id,name', 'vehicles:id,name');
+		$person->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($person);

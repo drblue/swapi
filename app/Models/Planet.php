@@ -22,12 +22,16 @@ class Planet extends Model
 		'population',
 		'created',
 		'edited',
+		'image_url',
+		'short_description',
+		'long_description',
 	];
 
 	/**
 	 * The attributes that should be hidden for arrays.
 	 */
 	protected $hidden = [
+		'long_description',
 		'pivot',
 	];
 

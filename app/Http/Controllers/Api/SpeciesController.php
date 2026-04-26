@@ -61,6 +61,7 @@ class SpeciesController extends Controller
 	{
 		// Load relationships
 		$species->load('people:id,name', 'homeworld:id,name', 'films:id,title');
+		$species->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($species);

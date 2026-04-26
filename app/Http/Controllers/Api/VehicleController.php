@@ -58,6 +58,7 @@ class VehicleController extends Controller
 	{
 		// Load relationships
 		$vehicle->load('pilots:id,name', 'films:id,title');
+		$vehicle->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($vehicle);

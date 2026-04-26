@@ -26,12 +26,16 @@ class Starship extends Model
 		'starship_class',
 		'created',
 		'edited',
+		'image_url',
+		'short_description',
+		'long_description',
 	];
 
 	/**
 	 * The attributes that should be hidden for arrays.
 	 */
 	protected $hidden = [
+		'long_description',
 		'pivot',
 	];
 

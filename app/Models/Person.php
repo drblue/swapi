@@ -30,6 +30,10 @@ class Person extends Model
 		'wiki_link',
 		'image_url',
 		'affiliations',
+		'short_description',
+		'long_description',
+		'force_alignment',
+		'lightsaber_color',
 		'created',
 		'edited',
 		'homeworld_id',
@@ -40,6 +44,7 @@ class Person extends Model
 	 */
 	protected $hidden = [
 		'homeworld_id',
+		'long_description',
 		'pivot',
 	];
 

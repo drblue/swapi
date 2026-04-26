@@ -58,6 +58,7 @@ class PlanetController extends Controller
 	{
 		// Load relationships
 		$planet->load('residents', 'films:id,title');	// For some reason this doesn't work: 'residents:id,name'
+		$planet->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($planet);

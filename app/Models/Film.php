@@ -18,6 +18,8 @@ class Film extends Model
 		'producer',
 		'release_date',
 		'image_url',
+		'short_description',
+		'long_description',
 		'created',
 		'edited',
 	];
@@ -26,6 +28,7 @@ class Film extends Model
 	 * The attributes that should be hidden for arrays.
 	 */
 	protected $hidden = [
+		'long_description',
 		'pivot',
 	];
 

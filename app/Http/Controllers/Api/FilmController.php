@@ -58,6 +58,7 @@ class FilmController extends Controller
 	{
 		// Load relationships
 		$film->load('characters:id,name', 'planets:id,name', 'starships:id,name', 'vehicles:id,name', 'species:id,name');
+		$film->makeVisible('long_description');
 
 		// Return response as json
 		return response()->json($film);

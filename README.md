@@ -50,7 +50,7 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
     php artisan swapi:import-extensions --optimize
     ```
 
-    The importer reads the bundled extension data in `data/`, normalizes it against the canonical API records, preserves existing dump-provided `image_url` values, copies fallback bundled images into `public/images/{resource}/` only where a resource has no image, and optionally runs ImageOptim on the final asset tree. ImageAlpha and JPEGmini can be enabled with `--imagealpha` and `--jpegmini` if those apps are installed locally.
+    The importer reads the bundled extension data in `data/`, normalizes it against the canonical API records, preserves existing dump-provided `image_url` values, copies fallback bundled images into `public/images/{resource}/` only where a resource has no image, prefixes local fallback URLs with `APP_URL`, and optionally runs ImageOptim on the final asset tree. ImageAlpha and JPEGmini can be enabled with `--imagealpha` and `--jpegmini` if those apps are installed locally.
 
     To preview the import without writing database or image files, run:
 
@@ -91,7 +91,7 @@ People may also include:
 - `wiki_link` - external wiki link when populated
 - `affiliations` - affiliation list when populated
 
-The importer preserves image URLs from the canonical dump. When the dump has no image for a resource, it chooses the highest-resolution fallback image from the bundled source datasets. A small explicit override map is supported inside `App\Console\Commands\ImportExtendedMetadata` for obvious outliers.
+The importer preserves image URLs from the canonical dump. When the dump has no image for a resource, it chooses the highest-resolution fallback image from the bundled source datasets and stores it as an absolute URL using `APP_URL`. A small explicit override map is supported inside `App\Console\Commands\ImportExtendedMetadata` for obvious outliers.
 
 ### Endpoints
 

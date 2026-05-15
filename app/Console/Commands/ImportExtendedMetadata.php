@@ -151,7 +151,7 @@ class ImportExtendedMetadata extends Command
 						'name' => $model->{$nameColumn},
 						'short_description' => null,
 						'long_description' => null,
-						'image_url' => $model->image_url ?? null,
+						'image_url' => $this->normalizeImageUrl($model->image_url ?? null),
 						'image_candidates' => [],
 						'force_alignment' => null,
 						'lightsaber_color' => null,
@@ -334,9 +334,29 @@ class ImportExtendedMetadata extends Command
 					File::copy($winner['path'], $targetPath);
 				}
 
-				$record['image_url'] = '/' . $relativePath;
+				$record['image_url'] = $this->localImageUrl($relativePath);
 			}
 		}
+	}
+
+	/**
+	 * Prefix local public image paths with the configured application URL.
+	 */
+	private function normalizeImageUrl($url)
+	{
+		if (!$url || strpos($url, '/images/') !== 0) {
+			return $url;
+		}
+
+		return $this->localImageUrl(ltrim($url, '/'));
+	}
+
+	/**
+	 * Build an absolute URL for an image stored under public/images.
+	 */
+	private function localImageUrl($relativePath)
+	{
+		return rtrim(config('app.url'), '/') . '/' . ltrim($relativePath, '/');
 	}
 
 	/**

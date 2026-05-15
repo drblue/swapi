@@ -29,6 +29,7 @@ class Person extends Model
 		'skin_color',
 		'wiki_link',
 		'image_url',
+		'image_source',
 		'affiliations',
 		'short_description',
 		'long_description',

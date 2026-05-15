@@ -142,7 +142,7 @@ class ImportExtendedMetadata extends Command
 				$columns[] = 'image_url';
 			}
 
-			foreach (['short_description', 'long_description', 'force_alignment', 'lightsaber_color'] as $column) {
+			foreach (['image_source', 'short_description', 'long_description', 'force_alignment', 'lightsaber_color'] as $column) {
 				if (Schema::hasColumn($table, $column)) {
 					$columns[] = $column;
 				}
@@ -158,6 +158,7 @@ class ImportExtendedMetadata extends Command
 						'short_description' => $model->short_description ?? null,
 						'long_description' => $model->long_description ?? null,
 						'image_url' => $this->normalizeImageUrl($model->image_url ?? null),
+						'image_source' => $model->image_source ?? null,
 						'image_candidates' => [],
 						'force_alignment' => $model->force_alignment ?? null,
 						'lightsaber_color' => $model->lightsaber_color ?? null,
@@ -341,6 +342,7 @@ class ImportExtendedMetadata extends Command
 				}
 
 				$record['image_url'] = $this->localImageUrl($relativePath);
+				$record['image_source'] = null;
 			}
 		}
 	}
@@ -372,6 +374,8 @@ class ImportExtendedMetadata extends Command
 	{
 		foreach ($records as $resource => $items) {
 			$class = $this->resources[$resource]['class'];
+			$table = (new $class())->getTable();
+			$hasImageSource = Schema::hasColumn($table, 'image_source');
 
 			foreach ($items as $id => $record) {
 				$values = [
@@ -379,6 +383,10 @@ class ImportExtendedMetadata extends Command
 					'short_description' => $record['short_description'],
 					'long_description' => $record['long_description'],
 				];
+
+				if ($hasImageSource) {
+					$values['image_source'] = $record['image_source'];
+				}
 
 				if ($resource === 'people') {
 					$values['force_alignment'] = $record['force_alignment'];

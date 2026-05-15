@@ -18,6 +18,7 @@ class Film extends Model
 		'producer',
 		'release_date',
 		'image_url',
+		'image_source',
 		'short_description',
 		'long_description',
 		'created',

@@ -24,6 +24,7 @@ class Species extends Model
 		'edited',
 		'homeworld_id',
 		'image_url',
+		'image_source',
 		'short_description',
 		'long_description',
 	];

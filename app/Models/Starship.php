@@ -27,6 +27,7 @@ class Starship extends Model
 		'created',
 		'edited',
 		'image_url',
+		'image_source',
 		'short_description',
 		'long_description',
 	];

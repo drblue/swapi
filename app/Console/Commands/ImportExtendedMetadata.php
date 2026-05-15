@@ -142,6 +142,12 @@ class ImportExtendedMetadata extends Command
 				$columns[] = 'image_url';
 			}
 
+			foreach (['short_description', 'long_description', 'force_alignment', 'lightsaber_color'] as $column) {
+				if (Schema::hasColumn($table, $column)) {
+					$columns[] = $column;
+				}
+			}
+
 			$records[$resource] = $class::query()
 				->select($columns)
 				->get()
@@ -149,12 +155,12 @@ class ImportExtendedMetadata extends Command
 					return [$model->id => [
 						'id' => $model->id,
 						'name' => $model->{$nameColumn},
-						'short_description' => null,
-						'long_description' => null,
+						'short_description' => $model->short_description ?? null,
+						'long_description' => $model->long_description ?? null,
 						'image_url' => $this->normalizeImageUrl($model->image_url ?? null),
 						'image_candidates' => [],
-						'force_alignment' => null,
-						'lightsaber_color' => null,
+						'force_alignment' => $model->force_alignment ?? null,
+						'lightsaber_color' => $model->lightsaber_color ?? null,
 					]];
 				})
 				->all();

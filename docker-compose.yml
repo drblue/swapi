@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ${SWAPI_ENV_FILE:-.env.docker}
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - swapi_storage:/var/www/html/storage
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    env_file:
+      - ${SWAPI_ENV_FILE:-.env.docker}
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u\"$${MYSQL_USER}\" -p\"$${MYSQL_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - swapi_mysql:/var/lib/mysql
+      - "./data/swapi_-_2026-04-26_-_17-17-55_-_beeblebrox (jn).sql:/docker-entrypoint-initdb.d/001-swapi.sql:ro"
+
+volumes:
+  swapi_mysql:
+  swapi_storage:

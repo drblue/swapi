@@ -66,6 +66,36 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
 
 12. Visit [http://localhost:8000/api/](http://localhost:8000/api/) in your browser
 
+## Docker Deployment
+
+The app can be deployed with Docker Compose on a VPS. MySQL data is stored in the named Docker volume `swapi_mysql`, so it survives container restarts and app rebuilds. The canonical SQL dump is mounted into MySQL's init directory and is imported only when the database volume is first created.
+
+1. Clone the repository on the server and enter the project directory.
+
+2. Start the stack:
+
+    ```bash
+    ./scripts/start.sh
+    ```
+
+    On first run, the script creates `.env.docker` with a generated `APP_KEY`, database password, and root password. Edit `.env.docker` and set `APP_URL` to the public URL for the VPS before public use.
+
+3. Visit the app on the configured port. The default is `http://localhost:8080/api/`.
+
+Useful commands:
+
+```bash
+./scripts/start.sh      # build and start
+./scripts/stop.sh       # stop containers, keep volumes
+./scripts/restart.sh    # restart containers
+./scripts/update.sh     # git pull --ff-only, rebuild app image, restart
+./scripts/swapi-docker.sh status
+./scripts/swapi-docker.sh logs app
+./scripts/swapi-docker.sh logs db
+```
+
+The update script does not remove Docker volumes. Do not run `docker compose down -v` unless you intentionally want to delete the database.
+
 ## Usage
 
 Endpoints are available at `/api/` and are documented below.

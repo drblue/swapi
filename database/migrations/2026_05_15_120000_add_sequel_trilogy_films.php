@@ -143,7 +143,7 @@ class AddSequelTrilogyFilms extends Migration
 			$this->person(84, 'Rey', '15ABY', 'hazel', 'brown', '170', '54', 'light', 61, ['Resistance', 'Jedi Order'], 'https://starwars.fandom.com/wiki/Rey_Skywalker', 'https://static.wikia.nocookie.net/starwars/images/2/2b/Rey_TROS_Fathead.png'),
 			$this->person(85, 'Finn', '11ABY', 'dark', 'black', '178', '73', 'dark', 28, ['First Order', 'Resistance'], 'https://starwars.fandom.com/wiki/Finn', 'https://static.wikia.nocookie.net/starwars/images/1/1a/Finn-TSWB.png'),
 			$this->person(86, 'Poe Dameron', '2ABY', 'brown', 'brown', '172', '80', 'light', 72, ['New Republic', 'Resistance'], 'https://starwars.fandom.com/wiki/Poe_Dameron', 'https://static.wikia.nocookie.net/starwars/images/6/6b/PoeDameron-Heroes2023.png'),
-			$this->person(87, 'BB-8', 'unknown', 'black', 'none', '67', '18', 'white, orange', null, ['Resistance'], 'https://starwars.fandom.com/wiki/BB-8', 'https://static.wikia.nocookie.net/starwars/images/6/68/BB8-Fathead.png'),
+			$this->person(87, 'BB-8', 'unknown', 'black', 'none', '67', '18', 'white, orange', 28, ['Resistance'], 'https://starwars.fandom.com/wiki/BB-8', 'https://static.wikia.nocookie.net/starwars/images/6/68/BB8-Fathead.png'),
 			$this->person(88, 'Kylo Ren', '5ABY', 'brown', 'black', '189', '89', 'light', 2, ['New Jedi Order', 'Knights of Ren', 'First Order'], 'https://starwars.fandom.com/wiki/Ben_Solo', 'https://static.wikia.nocookie.net/starwars/images/b/bc/KyloRenVFcover-TROS.png'),
 			$this->person(89, 'Snoke', 'unknown', 'blue', 'none', '218', 'unknown', 'pale', 67, ['First Order'], 'https://starwars.fandom.com/wiki/Snoke', 'https://static.wikia.nocookie.net/starwars/images/f/f0/Snoke-TLJOCE.png'),
 			$this->person(90, 'Maz Kanata', '973BBY', 'yellow', 'white', '124', 'unknown', 'orange', 63, ['Maz Kanata\'s castle', 'Resistance'], 'https://starwars.fandom.com/wiki/Maz_Kanata', 'https://static.wikia.nocookie.net/starwars/images/5/53/MazKanata-TROSGG.png'),
@@ -154,7 +154,7 @@ class AddSequelTrilogyFilms extends Migration
 			$this->person(95, 'DJ', 'unknown', 'brown', 'black', '180', 'unknown', 'light', 28, [], 'https://starwars.fandom.com/wiki/DJ', 'https://static.wikia.nocookie.net/starwars/images/d/d5/TLJ-DJ-Movie-no.jpg'),
 			$this->person(96, 'Jannah', 'unknown', 'brown', 'black', '170', 'unknown', 'dark', 71, ['First Order', 'Company 77', 'Resistance'], 'https://starwars.fandom.com/wiki/Jannah', 'https://static.wikia.nocookie.net/starwars/images/7/78/Jannah-HeroesResistance.png'),
 			$this->person(97, 'Zorii Bliss', 'unknown', 'unknown', 'unknown', '170', 'unknown', 'unknown', 69, ['Spice Runners of Kijimi'], 'https://starwars.fandom.com/wiki/Zorii_Bliss', 'https://static.wikia.nocookie.net/starwars/images/0/08/ZoriiBliss-TSWB.png'),
-			$this->person(98, 'D-O', 'unknown', 'black', 'none', 'unknown', 'unknown', 'white, green', null, ['Resistance'], 'https://starwars.fandom.com/wiki/D-O', 'https://static.wikia.nocookie.net/starwars/images/9/91/D-O_Fathead.png'),
+			$this->person(98, 'D-O', 'unknown', 'black', 'none', 'unknown', 'unknown', 'white, green', 28, ['Resistance'], 'https://starwars.fandom.com/wiki/D-O', 'https://static.wikia.nocookie.net/starwars/images/9/91/D-O_Fathead.png'),
 			$this->person(99, 'Lor San Tekka', 'unknown', 'blue', 'white', 'unknown', 'unknown', 'light', 61, ['Church of the Force'], 'https://starwars.fandom.com/wiki/Lor_San_Tekka', 'https://static.wikia.nocookie.net/starwars/images/d/d8/LorSanTekka-SWTimelines.png'),
 			$this->person(100, 'Unkar Plutt', 'unknown', 'black', 'none', 'unknown', 'unknown', 'green', 61, ['Niima Outpost'], 'https://starwars.fandom.com/wiki/Unkar_Plutt', 'https://static.wikia.nocookie.net/starwars/images/b/b7/Unkar_Plutt-RO_U_Visual_Guide.png'),
 			$this->person(101, 'Teedo', 'unknown', 'black', 'none', 'unknown', 'unknown', 'unknown', 61, [], 'https://starwars.fandom.com/wiki/Teedo', 'https://static.wikia.nocookie.net/starwars/images/b/b8/Teedo-TFUVD.png'),
@@ -190,7 +190,7 @@ class AddSequelTrilogyFilms extends Migration
 			'lightsaber_color' => $id === 84 ? 'blue, yellow' : ($id === 88 ? 'red, blue' : null),
 			'created' => $timestamp,
 			'edited' => $timestamp,
-			'homeworld_id' => $homeworldId,
+			'homeworld_id' => $homeworldId ?: 28,
 		];
 	}
 

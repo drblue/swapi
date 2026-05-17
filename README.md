@@ -36,7 +36,7 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
 
 7. In the .env file, add database information to allow Laravel to connect to the database
 
-8. Import the canonical database dump from `data/swapi_-_2026-04-26_-_17-17-55_-_beeblebrox (jn).sql` or an equivalent current dump
+8. Import the bootstrap database dump from `database/bootstrap/swapi.sql`
 
 9. Validate the database connection by running
 
@@ -68,7 +68,9 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
 
 ## Docker Deployment
 
-The app can be deployed with Docker Compose on a VPS. MySQL data is stored in the named Docker volume `swapi_mysql`, so it survives container restarts and app rebuilds. The canonical SQL dump is mounted into MySQL's init directory and is imported only when the database volume is first created.
+The app can be deployed with Docker Compose on a VPS. MySQL data is stored in the named Docker volume `swapi_mysql`, so it survives container restarts, app rebuilds, and host reboots. Containers use `restart: unless-stopped`, so Docker starts them again automatically after the VPS reboots.
+
+The bundled SQL dump at `database/bootstrap/swapi.sql` contains the current schema and data used to bootstrap fresh Docker databases. On startup, the app imports it only when the configured MySQL database has no tables, then runs Laravel migrations and `swapi:import-extensions` so future code changes are still applied.
 
 1. Clone the repository on the server and enter the project directory.
 
@@ -95,6 +97,80 @@ Useful commands:
 ```
 
 The update script does not remove Docker volumes. Do not run `docker compose down -v` unless you intentionally want to delete the database.
+
+### Run From GHCR
+
+You do not need to clone the full source tree on the VPS if you want to run the published image from GHCR. Create a deployment directory with only `docker-compose.ghcr.yml` and `.env.docker`.
+
+1. Create `.env.docker`:
+
+    ```env
+    COMPOSE_PROJECT_NAME=swapi
+
+    APP_NAME="StarWars API"
+    APP_ENV=production
+    APP_KEY=base64:CHANGE_ME
+    APP_DEBUG=false
+    APP_URL=https://swapi.example.com
+    APP_BIND=127.0.0.1
+    APP_PORT=8080
+    SWAPI_IMAGE=ghcr.io/drblue/swapi:latest
+
+    DB_CONNECTION=mysql
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=swapi
+    DB_USERNAME=swapi
+    DB_PASSWORD=CHANGE_ME
+
+    MYSQL_DATABASE=swapi
+    MYSQL_USER=swapi
+    MYSQL_PASSWORD=CHANGE_ME
+    MYSQL_ROOT_PASSWORD=CHANGE_ME
+
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    FILESYSTEM_DRIVER=local
+    QUEUE_CONNECTION=sync
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
+
+    RUN_MIGRATIONS=true
+    RUN_EXTENSION_IMPORT=true
+    BOOTSTRAP_DATABASE=true
+    DB_BOOTSTRAP_DUMP=/var/www/html/database/bootstrap/swapi.sql
+    CACHE_CONFIG=true
+    ```
+
+    Generate real secrets for `APP_KEY`, `DB_PASSWORD`, and `MYSQL_ROOT_PASSWORD`. `APP_BIND=127.0.0.1` keeps the app private to the VPS so Nginx can proxy to it.
+
+2. Start or update the stack:
+
+    ```bash
+    docker compose -f docker-compose.ghcr.yml pull
+    docker compose -f docker-compose.ghcr.yml up -d
+    ```
+
+    On the first run, the app bootstraps an empty database from the current SQL dump bundled in the image, then runs migrations and the metadata importer.
+
+3. Use Nginx as a reverse proxy:
+
+    ```nginx
+    server {
+        listen 80;
+        server_name swapi.example.com;
+
+        location / {
+            proxy_pass http://127.0.0.1:8080;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+    ```
+
+To use a specific image version, set `SWAPI_IMAGE` to a commit tag instead of `latest`, for example `ghcr.io/drblue/swapi:<commit-sha>`.
 
 ## Usage
 

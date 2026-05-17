@@ -12,6 +12,12 @@ class AddFandomImagesToSequelResources extends Migration
 	 */
 	public function up()
 	{
+		$this->updateSources('films', [
+			7 => 'https://www.themoviedb.org/movie/140607-star-wars-the-force-awakens',
+			8 => 'https://www.themoviedb.org/movie/181808-star-wars-the-last-jedi',
+			9 => 'https://www.themoviedb.org/movie/181812-star-wars-the-rise-of-skywalker',
+		]);
+
 		$this->updateImages('people', [
 			84 => ['https://static.wikia.nocookie.net/starwars/images/2/2b/Rey_TROS_Fathead.png', 'https://starwars.fandom.com/wiki/Rey_Skywalker'],
 			85 => ['https://static.wikia.nocookie.net/starwars/images/1/1a/Finn-TSWB.png', 'https://starwars.fandom.com/wiki/Finn'],
@@ -89,6 +95,7 @@ class AddFandomImagesToSequelResources extends Migration
 	 */
 	public function down()
 	{
+		DB::table('films')->whereIn('id', [7, 8, 9])->update(['image_source' => null]);
 		DB::table('people')->whereBetween('id', [84, 108])->update(['image_url' => null, 'image_source' => null]);
 		DB::table('planets')->whereBetween('id', [61, 72])->update(['image_url' => null, 'image_source' => null]);
 		DB::table('species')->whereBetween('id', [38, 41])->update(['image_url' => null, 'image_source' => null]);
@@ -103,6 +110,13 @@ class AddFandomImagesToSequelResources extends Migration
 				'image_url' => $image[0],
 				'image_source' => $image[1],
 			]);
+		}
+	}
+
+	private function updateSources($table, array $rows)
+	{
+		foreach ($rows as $id => $source) {
+			DB::table($table)->where('id', $id)->update(['image_source' => $source]);
 		}
 	}
 }

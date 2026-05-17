@@ -41,7 +41,9 @@ APP_ENV=production
 APP_KEY=${app_key}
 APP_DEBUG=false
 APP_URL=http://localhost:8080
+APP_BIND=127.0.0.1
 APP_PORT=8080
+SWAPI_IMAGE=ghcr.io/drblue/swapi:latest
 
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null
@@ -68,6 +70,8 @@ SESSION_LIFETIME=120
 
 RUN_MIGRATIONS=true
 RUN_EXTENSION_IMPORT=true
+BOOTSTRAP_DATABASE=true
+DB_BOOTSTRAP_DUMP=/var/www/html/database/bootstrap/swapi.sql
 CACHE_CONFIG=true
 EOF
 

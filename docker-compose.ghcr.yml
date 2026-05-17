@@ -1,13 +1,11 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ${SWAPI_IMAGE:-ghcr.io/drblue/swapi:latest}
     restart: unless-stopped
     env_file:
       - ${SWAPI_ENV_FILE:-.env.docker}
     ports:
-      - "${APP_PORT:-8080}:80"
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8080}:80"
     depends_on:
       db:
         condition: service_healthy

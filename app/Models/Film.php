@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\FormatsImageUrls;
 use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
+	use FormatsImageUrls;
+
 	/**
 	 * The attributes that are mass assignable.
 	 */

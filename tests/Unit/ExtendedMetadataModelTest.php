@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Film;
 use App\Models\Person;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ExtendedMetadataModelTest extends TestCase
 {
@@ -33,5 +33,29 @@ class ExtendedMetadataModelTest extends TestCase
 		$film->makeVisible('long_description');
 
 		$this->assertArrayHasKey('long_description', $film->toArray());
+	}
+
+	/** @test */
+	public function local_image_urls_are_prefixed_with_app_url()
+	{
+		config(['app.url' => 'https://swapi.example.com']);
+
+		$person = new Person([
+			'name' => 'Luke Skywalker',
+			'image_url' => '/images/people/1-luke-skywalker.jpg',
+		]);
+
+		$this->assertSame('https://swapi.example.com/images/people/1-luke-skywalker.jpg', $person->image_url);
+	}
+
+	/** @test */
+	public function remote_image_urls_are_not_changed()
+	{
+		$person = new Person([
+			'name' => 'Luke Skywalker',
+			'image_url' => 'https://static.wikia.nocookie.net/starwars/images/2/20/LukeTLJ.jpg',
+		]);
+
+		$this->assertSame('https://static.wikia.nocookie.net/starwars/images/2/20/LukeTLJ.jpg', $person->image_url);
 	}
 }

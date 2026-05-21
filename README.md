@@ -50,7 +50,7 @@ A deployment of this API is available at [https://swapi.thehiveresistance.com](h
     php artisan swapi:import-extensions --optimize
     ```
 
-    The importer reads the bundled extension data in `data/`, normalizes it against the canonical API records, preserves existing dump-provided `image_url` values, copies fallback bundled images into `public/images/{resource}/` only where a resource has no image, prefixes local fallback URLs with `APP_URL`, and optionally runs ImageOptim on the final asset tree. ImageAlpha and JPEGmini can be enabled with `--imagealpha` and `--jpegmini` if those apps are installed locally.
+    The importer reads the bundled extension data in `data/`, normalizes it against the canonical API records, preserves existing dump-provided `image_url` values, copies fallback bundled images into `public/images/{resource}/` only where a resource has no image, stores local fallback URLs as root-relative `/images/...` paths, and optionally runs ImageOptim on the final asset tree. ImageAlpha and JPEGmini can be enabled with `--imagealpha` and `--jpegmini` if those apps are installed locally.
 
     To preview the import without writing database or image files, run:
 
@@ -97,6 +97,41 @@ Useful commands:
 ```
 
 The update script does not remove Docker volumes. Do not run `docker compose down -v` unless you intentionally want to delete the database.
+
+### Publish a New Docker Image
+
+Docker images are published automatically by GitHub Actions. Every push to `main` runs `.github/workflows/publish-image.yml`, builds the Docker image, and publishes it to GHCR with two tags:
+
+- `ghcr.io/drblue/swapi:latest`
+- `ghcr.io/drblue/swapi:<commit-sha>`
+
+Normal release flow:
+
+1. Merge the tested changes into `main`.
+
+2. Push `main` to GitHub:
+
+    ```bash
+    git push origin main
+    ```
+
+3. Wait for the `Publish Docker Image` GitHub Actions workflow to pass.
+
+4. Update the VPS deployment:
+
+    ```bash
+    docker compose -f docker-compose.ghcr.yml pull
+    docker compose -f docker-compose.ghcr.yml up -d
+    ```
+
+To publish manually instead, log in to GHCR with a GitHub token that has package write access, then build and push the image:
+
+```bash
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u USERNAME --password-stdin
+docker build -t ghcr.io/drblue/swapi:latest -t ghcr.io/drblue/swapi:$(git rev-parse HEAD) .
+docker push ghcr.io/drblue/swapi:latest
+docker push ghcr.io/drblue/swapi:$(git rev-parse HEAD)
+```
 
 ### Run From GHCR
 
@@ -197,7 +232,7 @@ People may also include:
 - `wiki_link` - external wiki link when populated
 - `affiliations` - affiliation list when populated
 
-The importer preserves image URLs from the canonical dump. When the dump has no image for a resource, it chooses the highest-resolution fallback image from the bundled source datasets and stores it as an absolute URL using `APP_URL`. A small explicit override map is supported inside `App\Console\Commands\ImportExtendedMetadata` for obvious outliers.
+The importer preserves remote image URLs from the canonical dump. When the dump has no image for a resource, it chooses the highest-resolution fallback image from the bundled source datasets and stores it as a root-relative `/images/...` path. API responses prefix those local paths with `APP_URL` at request time. A small explicit override map is supported inside `App\Console\Commands\ImportExtendedMetadata` for obvious outliers.
 
 ### Endpoints
 

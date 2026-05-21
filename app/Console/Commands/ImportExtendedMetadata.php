@@ -157,7 +157,7 @@ class ImportExtendedMetadata extends Command
 						'name' => $model->{$nameColumn},
 						'short_description' => $model->short_description ?? null,
 						'long_description' => $model->long_description ?? null,
-						'image_url' => $this->normalizeImageUrl($model->image_url ?? null),
+						'image_url' => $this->normalizeImageUrl($model->getRawOriginal('image_url')),
 						'image_source' => $model->image_source ?? null,
 						'image_candidates' => [],
 						'force_alignment' => $model->force_alignment ?? null,
@@ -348,23 +348,33 @@ class ImportExtendedMetadata extends Command
 	}
 
 	/**
-	 * Prefix local public image paths with the configured application URL.
+	 * Store local public image paths relative to the web root.
 	 */
 	private function normalizeImageUrl($url)
 	{
-		if (!$url || strpos($url, '/images/') !== 0) {
+		if (!$url) {
 			return $url;
 		}
 
-		return $this->localImageUrl(ltrim($url, '/'));
+		if (strpos($url, '/images/') === 0) {
+			return $url;
+		}
+
+		$path = parse_url($url, PHP_URL_PATH);
+
+		if ($path && strpos($path, '/images/') === 0) {
+			return $path;
+		}
+
+		return $url;
 	}
 
 	/**
-	 * Build an absolute URL for an image stored under public/images.
+	 * Build a root-relative URL for an image stored under public/images.
 	 */
 	private function localImageUrl($relativePath)
 	{
-		return rtrim(config('app.url'), '/') . '/' . ltrim($relativePath, '/');
+		return '/' . ltrim($relativePath, '/');
 	}
 
 	/**

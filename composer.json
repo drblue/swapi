@@ -8,7 +8,7 @@
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.75",
+        "laravel/framework": "^8.83.29",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5"
     },
@@ -55,7 +55,12 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": {
+                "PKSA-8qx3-n5y5-vvnd": "No Laravel 8 patch is available; this app does not expose file upload validation endpoints."
+            }
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

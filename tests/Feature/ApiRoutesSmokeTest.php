@@ -67,6 +67,42 @@ class ApiRoutesSmokeTest extends TestCase
 	}
 
 	/** @test */
+	public function planet_detail_residents_only_include_id_and_name()
+	{
+		$response = $this->getJson('/api/planets/1');
+
+		$response->assertOk();
+		$residents = $response->json('residents');
+
+		$this->assertIsArray($residents);
+		$this->assertNotEmpty($residents, 'planet detail returned no residents');
+		$this->assertSame([
+			'id',
+			'name',
+		], array_keys($residents[0]));
+	}
+
+	/** @test */
+	public function people_and_species_homeworlds_only_include_id_and_name()
+	{
+		foreach (['/api/people/5', '/api/species/1', '/api/people', '/api/species'] as $route) {
+			$response = $this->getJson($route);
+
+			$response->assertOk();
+			$resource = str_contains($route, '/api/people')
+				? (str_ends_with($route, '/people') ? $response->json('data.0') : $response->json())
+				: (str_ends_with($route, '/species') ? $response->json('data.0') : $response->json());
+
+			$this->assertIsArray($resource['homeworld']);
+			$this->assertSame([
+				'id',
+				'name',
+			], array_keys($resource['homeworld']));
+			$this->assertArrayNotHasKey('homeworld_count', $resource);
+		}
+	}
+
+	/** @test */
 	public function api_search_routes_return_valid_paginated_data()
 	{
 		foreach (array_keys($this->resources) as $resource) {

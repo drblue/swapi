@@ -57,7 +57,7 @@ class PlanetController extends Controller
 	public function show(Planet $planet)
 	{
 		// Load relationships
-		$planet->load('residents', 'films:id,title');	// For some reason this doesn't work: 'residents:id,name'
+		$planet->load('residents:id,name,homeworld_id', 'films:id,title');
 		$planet->makeVisible('long_description');
 
 		// Return response as json
